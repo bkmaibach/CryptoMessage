@@ -73,14 +73,14 @@ public class EncryptorTest {
 
         try {
             mEncryptor.encrypt(toEncrypt, toDecrtpt);
-        }
-        catch (Exception e){
+        } catch (Exception e){
             Log.e(TAG, e.getMessage());
         }
         //TODO: FInish encryptionCheck
     }
 
-    @Test public void file_decrtptionCheck()
+    @Test
+    public void file_decrtptionCheck()
     {
         try {
             mEncryptor.decrypt(toDecrtpt, result);

@@ -14,6 +14,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import android.util.Log;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -26,7 +27,7 @@ import javax.crypto.spec.SecretKeySpec;
  * Created by bmaib_000 on 2016-08-14.
  */
 public class Encryptor {
-
+    private String TAG = "Encryptor";
 
     /*To use the code, you need corresponding public and private RSA keys. RSA keys can be generated using the open source tool OpenSSL. However, you have to be careful to generate them in the format required by the Java encryption libraries. To generate a private key of length 2048 bits:
 
@@ -72,6 +73,12 @@ secure.decrypt(encryptedFile, unencryptedFile);
         SecretKey key = kgen.generateKey();
         aesKey = key.getEncoded();
         aeskeySpec = new SecretKeySpec(aesKey, "AES");
+    }
+
+    public boolean isInitialized()
+    {
+
+        return pkCipher != null && aesCipher != null && aesKey != null && aeskeySpec != null;
     }
 
     public void encrypt(File in, File out) throws IOException, InvalidKeyException
