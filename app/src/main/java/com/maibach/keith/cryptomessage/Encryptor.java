@@ -55,7 +55,7 @@ secure.decrypt(encryptedFile, unencryptedFile);
     private Cipher pkCipher;
     private Cipher aesCipher;
     private byte[] aesKey;
-    private int AES_Key_Size = 256;
+    private int AES_Key_Size = 128;
     private SecretKeySpec aeskeySpec;
 
     public Encryptor() throws GeneralSecurityException
@@ -77,7 +77,6 @@ secure.decrypt(encryptedFile, unencryptedFile);
 
     public boolean isInitialized()
     {
-
         return pkCipher != null && aesCipher != null && aesKey != null && aeskeySpec != null;
     }
 
