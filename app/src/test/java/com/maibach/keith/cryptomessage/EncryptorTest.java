@@ -45,9 +45,9 @@ public class EncryptorTest {
 
         toEncryptFile = new File("EncryptorTest_toEncrypt.txt");
         toDecryptFile = new File("EncryptorTest_toDecrypt.txt");
-        resultFile = new File("EncryptorTest_result");
+        resultFile = new File("EncryptorTest_result.txt");
         publicKeyFile = new File("public.der");
-        privateKeyFile = new File("private.der.ppk");
+        privateKeyFile = new File("private.der");
         aesKeyEncryptedFile = new File("EncryptorTest_aesKeyEncrypted");
 
         try{
@@ -73,7 +73,7 @@ public class EncryptorTest {
         String pk = readFile(publicKeyFile.getAbsolutePath());
         mEncryptor.saveKey(aesKeyEncryptedFile, publicKeyFile);
         String ake = readFile(aesKeyEncryptedFile.getAbsolutePath());
-        //TODO: Get key encryption to work
+
     }
 
     @Test
@@ -85,17 +85,21 @@ public class EncryptorTest {
         } catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    //@Test
-    public void file_decryptionCheck()
-    {
+        Assert.assertTrue(toDecryptFile.canRead());
+        //TODO: Finish testing encryption
         try {
             mEncryptor.decrypt(toDecryptFile, resultFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //TODO: Finish decryptionCheck
+        try {
+            String startedWith = readFile(toEncryptFile.getAbsolutePath());
+            String endedWith = readFile(resultFile.getAbsolutePath());
+            Assert.assertEquals("String corrupted by encryption/decryption", startedWith, endedWith);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @After
@@ -115,10 +119,12 @@ public class EncryptorTest {
                 stringBuilder.append(line);
                 stringBuilder.append(ls);
             }
-
-            return stringBuilder.toString();
-        } finally {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             reader.close();
+            return stringBuilder.toString();
         }
     }
 
