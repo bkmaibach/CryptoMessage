@@ -123,10 +123,10 @@ secure.decrypt(encryptedFile, unencryptedFile);
         // create public key
         X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
         KeyFactory kf = KeyFactory.getInstance("RSA");
-        PublicKey publicKey = kf.generatePublic(publicKeySpec);
+        PublicKey pk = kf.generatePublic(publicKeySpec);
 
         // write AES key
-        pkCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        pkCipher.init(Cipher.ENCRYPT_MODE, pk);
         CipherOutputStream os = new CipherOutputStream(new FileOutputStream(out), pkCipher);
         os.write(aesKey);
         os.close();
