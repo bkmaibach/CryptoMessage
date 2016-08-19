@@ -117,16 +117,16 @@ secure.decrypt(encryptedFile, unencryptedFile);
     public void saveKey(File out, File publicKeyFile) throws IOException, GeneralSecurityException
     {//So that the files can be decrypted later, the AES key is encrypted to a file using the RSA cipher. The RSA public key is assumed to be stored in a file.
         // read public key to be used to encrypt the AES key
-        byte[] encodedKey = new byte[(int)publicKeyFile.length()];
-        new FileInputStream(publicKeyFile).read(encodedKey);
+        byte[] publicKeyBytes = new byte[(int)publicKeyFile.length()];
+        new FileInputStream(publicKeyFile).read(publicKeyBytes);
 
         // create public key
-        X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(encodedKey);
+        X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
         KeyFactory kf = KeyFactory.getInstance("RSA");
-        PublicKey pk = kf.generatePublic(publicKeySpec);
+        PublicKey publicKey = kf.generatePublic(publicKeySpec);
 
         // write AES key
-        pkCipher.init(Cipher.ENCRYPT_MODE, pk);
+        pkCipher.init(Cipher.ENCRYPT_MODE, publicKey);
         CipherOutputStream os = new CipherOutputStream(new FileOutputStream(out), pkCipher);
         os.write(aesKey);
         os.close();

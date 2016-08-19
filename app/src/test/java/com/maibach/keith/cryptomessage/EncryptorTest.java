@@ -1,19 +1,14 @@
 package com.maibach.keith.cryptomessage;
 
-import android.util.Log;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.maibach.keith.cryptomessage.Encryptor;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import org.junit.Assert;
 import java.io.File;
@@ -23,11 +18,13 @@ import java.io.File;
  */
 public class EncryptorTest {
     private static Encryptor mEncryptor = null;
-    private static File toEncrypt;
-    private static File toDecrypt;
-    private static File result;
-    private static File publicKey;
-    private static File aesKeyEncrypted;
+    private static File toEncryptFile;
+    private static File toDecryptFile;
+    private static File resultFile;
+    private static File publicKeyFile;
+    private static File privateKeyFile;
+    private static File aesKeyEncryptedFile;
+    //Key Fingerprint: ssh-rsa 2048 c9:2a:0e:c3:85:1a:6d:1b:5f:b8:59:3d:e7:da:a8:08
 
     @Before
     public void init()
@@ -46,13 +43,15 @@ public class EncryptorTest {
             e.printStackTrace();
         }
 
-        toEncrypt = new File("EncryptorTest_toEncrypt.txt");
-        toDecrypt = new File("EncryptorTest_toDecrypt.txt");
-        result = new File("EncryptorTest_result.txt");
-        publicKey = new File("EncryptorTest_publicKey");
-        aesKeyEncrypted = new File("EncryptorTest_aesKeyEncrypted.txt");
+        toEncryptFile = new File("EncryptorTest_toEncrypt");
+        toDecryptFile = new File("EncryptorTest_toDecrypt");
+        resultFile = new File("EncryptorTest_result");
+        publicKeyFile = new File("EncryptorTest_publicKey");
+        privateKeyFile = new File("EncryptorTest_privateKey.ppk");
+        aesKeyEncryptedFile = new File("EncryptorTest_aesKeyEncrypted");
+
         try{
-            PrintWriter writer = new PrintWriter(toEncrypt, "UTF-8");
+            PrintWriter writer = new PrintWriter(toEncryptFile, "UTF-8");
             writer.write("Test input for Encryptor");
             writer.close();
         }
@@ -71,18 +70,18 @@ public class EncryptorTest {
     @Test
     public void key_getsEncrypted() throws Exception
     {
-        String pk = readFile(publicKey.getAbsolutePath());
-        mEncryptor.saveKey(aesKeyEncrypted, publicKey);
-        String ake = readFile(aesKeyEncrypted.getAbsolutePath());
+        String pk = readFile(publicKeyFile.getAbsolutePath());
+        mEncryptor.saveKey(aesKeyEncryptedFile, publicKeyFile);
+        String ake = readFile(aesKeyEncryptedFile.getAbsolutePath());
         //TODO: Get key encryption to work
     }
 
     @Test
     public void file_encryptionCheck()
     {
-        Assert.assertTrue(toEncrypt.canRead());
+        Assert.assertTrue(toEncryptFile.canRead());
         try {
-            mEncryptor.encrypt(toEncrypt, toDecrypt);
+            mEncryptor.encrypt(toEncryptFile, toDecryptFile);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -92,7 +91,7 @@ public class EncryptorTest {
     public void file_decryptionCheck()
     {
         try {
-            mEncryptor.decrypt(toDecrypt, result);
+            mEncryptor.decrypt(toDecryptFile, resultFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
