@@ -43,11 +43,11 @@ public class EncryptorTest {
             e.printStackTrace();
         }
 
-        toEncryptFile = new File("EncryptorTest_toEncrypt");
-        toDecryptFile = new File("EncryptorTest_toDecrypt");
+        toEncryptFile = new File("EncryptorTest_toEncrypt.txt");
+        toDecryptFile = new File("EncryptorTest_toDecrypt.txt");
         resultFile = new File("EncryptorTest_result");
-        publicKeyFile = new File("EncryptorTest_publicKey");
-        privateKeyFile = new File("EncryptorTest_privateKey.ppk");
+        publicKeyFile = new File("public.der");
+        privateKeyFile = new File("private.der.ppk");
         aesKeyEncryptedFile = new File("EncryptorTest_aesKeyEncrypted");
 
         try{
