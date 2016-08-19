@@ -68,16 +68,18 @@ public class EncryptorTest {
     }
 
     @Test
-    public void key_getsEncrypted() throws Exception
+    public void key_encryptionDecrtptionCheck() throws Exception
     {
         String pk = readFile(publicKeyFile.getAbsolutePath());
         mEncryptor.saveKey(aesKeyEncryptedFile, publicKeyFile);
+        //TODO Finish key save/load test
+        mEncryptor.loadKey();
         String ake = readFile(aesKeyEncryptedFile.getAbsolutePath());
 
     }
 
     @Test
-    public void file_encryptionCheck()
+    public void encryptionDecryptionCheck()
     {
         Assert.assertTrue(toEncryptFile.canRead());
         try {
@@ -86,7 +88,6 @@ public class EncryptorTest {
             e.printStackTrace();
         }
         Assert.assertTrue(toDecryptFile.canRead());
-        //TODO: Finish testing encryption
         try {
             mEncryptor.decrypt(toDecryptFile, resultFile);
         } catch (Exception e) {
