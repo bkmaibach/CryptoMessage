@@ -1,21 +1,18 @@
 package com.maibach.keith.cryptomessage;
 
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import org.junit.Assert;
-import java.io.File;
 import java.util.Scanner;
 
 /**
- * Created by bmaib_000 on 2016-08-15.
+ * Created by bmaib_000 on 2016-08-15. Test Encryptor.java.
  */
 public class EncryptorTest {
     private static Encryptor mEncryptor = null;
@@ -53,8 +50,8 @@ public class EncryptorTest {
         aesKeyEncryptedFile = new File("test/EncryptorTest/aesKeyEncrypted.txt");
         secondResultFile = new File("test/EncryptorTest/secondResult.txt");
 
-        Assert.assertTrue(toEncryptFile.exists());
-        Assert.assertTrue(toEncryptFile.canWrite());
+        Assert.assertTrue(publicKeyFile.exists());
+        Assert.assertTrue(privateKeyFile.exists());
 
         try{
             PrintWriter writer = new PrintWriter(toEncryptFile);//, "ASCII");
