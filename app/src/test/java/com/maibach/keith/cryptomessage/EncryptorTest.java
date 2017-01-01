@@ -26,14 +26,6 @@ public class EncryptorTest {
     private static File aesKeyEncryptedFile;
     private static File resavedKeyFile;
     private static File secondResultFile;
-    static ClassLoader classloader = EncryptorTest.class.getClassLoader();
-
-
-    @BeforeClass
-    public static void preInit()
-    {
-
-    }
 
     @Before
     public void init()
@@ -52,19 +44,22 @@ public class EncryptorTest {
             e.printStackTrace();
         }
 
-        toEncryptFile = new File("test/EncryptorTest/toEncrypt");
-        toDecryptFile = new File("test/EncryptorTest/toDecrypt");
-        resultFile = new File("test/EncryptorTest/result");
+        toEncryptFile = new File("test/EncryptorTest/toEncrypt.txt");
+        toDecryptFile = new File("test/EncryptorTest/toDecrypt.txt");
+        resultFile = new File("test/EncryptorTest/result.txt");
         publicKeyFile = new File("test/EncryptorTest/public.der");
         privateKeyFile = new File("test/EncryptorTest/private.der");
-        aesKeyEncryptedFile = new File("test/EncryptorTest/aesKeyEncrypted");
-        aesKeyEncryptedFile = new File("test/EncryptorTest/aesKeyEncrypted");
-        resavedKeyFile = new File("test/EncryptorTest/resavedKey");
-        secondResultFile = new File("test/EncryptorTest/secondResult");
+        aesKeyEncryptedFile = new File("test/EncryptorTest/aesKeyEncrypted.txt");
+        aesKeyEncryptedFile = new File("test/EncryptorTest/aesKeyEncrypted.txt");
+        resavedKeyFile = new File("test/EncryptorTest/resavedKey.txt");
+        secondResultFile = new File("test/EncryptorTest/secondResult.txt");
+
+        Assert.assertTrue(toEncryptFile.exists());
+        Assert.assertTrue(toEncryptFile.canWrite());
 
         try{
             PrintWriter writer = new PrintWriter(toEncryptFile);//, "ASCII");
-            writer.write("1ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            writer.write("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
             writer.close();
         }
         catch (IOException e) {
