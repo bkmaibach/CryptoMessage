@@ -54,7 +54,7 @@ secure.decrypt(encryptedFile, unencryptedFile);
 
     private Cipher pkCipher;
     private Cipher aesCipher;
-    private byte[] aesKey;
+    public byte[] aesKey;
     private int AES_Key_Size = 128;
     private SecretKeySpec aeskeySpec;
 

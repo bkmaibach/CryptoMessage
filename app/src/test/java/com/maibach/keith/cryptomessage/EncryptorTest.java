@@ -52,19 +52,19 @@ public class EncryptorTest {
             e.printStackTrace();
         }
 
-        toEncryptFile = new File(classloader.getResource("test/EncryptorTest/toEncrypt").getFile());
-        toDecryptFile = new File(classloader.getResource("test/EncryptorTest/toDecrypt").getFile());
-        resultFile = new File(classloader.getResource("test/EncryptorTest/result").getFile());
-        publicKeyFile = new File(classloader.getResource("test/EncryptorTest/public.der").getFile());
-        privateKeyFile = new File(classloader.getResource("test/EncryptorTest/private.der").getFile());
-        aesKeyEncryptedFile = new File(classloader.getResource("test/EncryptorTest/aesKeyEncrypted").getFile());
-        aesKeyEncryptedFile = new File(classloader.getResource("test/EncryptorTest/aesKeyEncrypted").getFile());
-        resavedKeyFile = new File(classloader.getResource("test/EncryptorTest/resavedKey").getFile());
-        secondResultFile = new File(classloader.getResource("test/EncryptorTest/secondResult").getFile());
+        toEncryptFile = new File("test/EncryptorTest/toEncrypt");
+        toDecryptFile = new File("test/EncryptorTest/toDecrypt");
+        resultFile = new File("test/EncryptorTest/result");
+        publicKeyFile = new File("test/EncryptorTest/public.der");
+        privateKeyFile = new File("test/EncryptorTest/private.der");
+        aesKeyEncryptedFile = new File("test/EncryptorTest/aesKeyEncrypted");
+        aesKeyEncryptedFile = new File("test/EncryptorTest/aesKeyEncrypted");
+        resavedKeyFile = new File("test/EncryptorTest/resavedKey");
+        secondResultFile = new File("test/EncryptorTest/secondResult");
 
         try{
             PrintWriter writer = new PrintWriter(toEncryptFile);//, "ASCII");
-            writer.println("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            writer.write("1ABCDEFGHIJKLMNOPQRSTUVWXYZ");
             writer.close();
         }
         catch (IOException e) {
@@ -104,9 +104,15 @@ public class EncryptorTest {
         mEncryptor.saveKey(aesKeyEncryptedFile, publicKeyFile);
         Encryptor newEncryptor = new Encryptor();
         newEncryptor.loadKey(aesKeyEncryptedFile, privateKeyFile);
-        int origKeySig = mEncryptor.aesKeyHash();
-        int newKeySig = newEncryptor.aesKeyHash();
-        Assert.assertEquals("Reloaded key's hash differs from original's", origKeySig, newKeySig);
+
+        //int origKeySig = mEncryptor.aesKeyHash();
+        //int newKeySig = newEncryptor.aesKeyHash();
+        //Assert.assertEquals("Reloaded key's hash differs from original's", origKeySig, newKeySig);
+
+        byte[] origKey = mEncryptor.aesKey;
+        byte[] newKey = newEncryptor.aesKey;
+        Assert.assertArrayEquals("Reloaded key's hash differs from original's", origKey, newKey);
+
         mEncryptor.decrypt(toDecryptFile, secondResultFile);
         byte[] firstResult = readFile(resultFile);
         byte[] secondResult = readFile(secondResultFile);
